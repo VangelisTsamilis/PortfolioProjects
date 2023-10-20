@@ -13,7 +13,7 @@ SELECT *
 FROM PortfolioProject..CovidVaccinations
 ORDER BY 3, 4
 
---select the data that will be used
+--Select the data that will be used
 SELECT location, date, total_cases, new_cases, total_deaths, population
 FROM PortfolioProject..CovidDeaths
 ORDER BY 1,2
@@ -39,10 +39,10 @@ GROUP BY location, population
 ORDER BY InfectedPopulationPercentage DESC
 
 --Showing the countries with the Highest Death Count per Population
--- Need to cast the total_deaths as interger because nvarchar data type leads to an error while using order by
-SELECT location, MAX(CAST(total_deaths as int)) AS TotalDeathCount
+--Need to cast the total_deaths as interger because nvarchar data type leads to an error while using order by
+SELECT location, MAX(CAST(total_deaths AS int)) AS TotalDeathCount
 FROM PortfolioProject..CovidDeaths
-WHERE continent is not null
+WHERE continent IS NOT NULL
 GROUP BY location
 ORDER BY TotalDeathCount DESC
 
@@ -53,20 +53,20 @@ ORDER BY TotalDeathCount DESC
 --Showing the continents with the HighestDeathCount
 SELECT continent, MAX(CAST(total_deaths AS INT)) AS TotalDeathCount
 FROM PortfolioProject..CovidDeaths
-WHERE continent is not null
+WHERE continent IS NOT NULL
 GROUP BY continent
 ORDER BY TotalDeathCount DESC
 
 --GLOBAL NUMBERS
 SELECT date, SUM(new_cases) AS total_cases, SUM(CAST(new_deaths AS INT)) AS total_deaths, SUM(CAST(new_deaths AS INT))/SUM(new_cases) *100 AS DeathPercentage
 FROM PortfolioProject..CovidDeaths
-WHERE continent is not null
+WHERE continent IS NOT NULL
 GROUP BY date
 ORDER BY 1,2
 
 SELECT SUM(new_cases) AS total_cases, SUM(CAST(new_deaths AS INT)) AS total_deaths, SUM(CAST(new_deaths AS INT))/SUM(new_cases) *100 AS DeathPercentage
 FROM PortfolioProject..CovidDeaths
-WHERE continent is not null
+WHERE continent IS NOT NULL
 
 --So far only the CovidDeaths table was used. Now also the CovidVaccinations table will be used
 
@@ -77,8 +77,8 @@ SELECT d.continent, d.location, d.date, d.population, v.new_vaccinations,
 SUM(CONVERT(INT, v.new_vaccinations)) OVER (PARTITION BY d.location ORDER BY d.location, d.date) AS RollingPeopleVaccinated
 FROM PortfolioProject..CovidDeaths d
 JOIN PortfolioProject..CovidVaccinations v
-ON d.location = v.location and d.date = v.date
-WHERE d.continent is not null
+ON d.location = v.location AND d.date = v.date
+WHERE d.continent IS NOT NULL
 ORDER BY 2,3
 
 --Use CTE (Common Table Expression) to calculate the population percentage vaccinated each day
@@ -90,12 +90,12 @@ SELECT d.continent, d.location, d.date, d.population, v.new_vaccinations,
 SUM(CONVERT(INT, v.new_vaccinations)) OVER (PARTITION BY d.location ORDER BY d.location, d.date) AS RollingPeopleVaccinated
 FROM PortfolioProject..CovidDeaths d
 JOIN PortfolioProject..CovidVaccinations v
-ON d.location = v.location and d.date = v.date
-WHERE d.continent is not null
+ON d.location = v.location AND d.date = v.date
+WHERE d.continent IS NOT NULL
 )
 
 SELECT *, (RollingPeopleVaccinated/Population)*100 AS PercentagePopulationVaccinated
-from PopVac
+FROM PopVac
 
 -- Use TEMP TABLE to calculate the population percentage vaccinated each day
 
@@ -115,8 +115,8 @@ SELECT d.continent, d.location, d.date, d.population, v.new_vaccinations,
 SUM(CONVERT(INT, v.new_vaccinations)) OVER (PARTITION BY d.location ORDER BY d.location, d.date) AS RollingPeopleVaccinated
 FROM PortfolioProject..CovidDeaths d
 JOIN PortfolioProject..CovidVaccinations v
-ON d.location = v.location and d.date = v.date
-WHERE d.continent is not null
+ON d.location = v.location AND d.date = v.date
+WHERE d.continent IS NOT NULL
 
 SELECT *, (RollingPeopleVaccinated/Population)*100 AS PercentagePopulationVaccinated
 FROM #PercentPopulationVaccinated
@@ -128,8 +128,8 @@ SELECT d.continent, d.location, d.date, d.population, v.new_vaccinations,
 SUM(CONVERT(INT, v.new_vaccinations)) OVER (PARTITION BY d.location ORDER BY d.location, d.date) AS RollingPeopleVaccinated
 FROM PortfolioProject..CovidDeaths d
 JOIN PortfolioProject..CovidVaccinations v
-ON d.location = v.location and d.date = v.date
-WHERE d.continent is not null
+ON d.location = v.location AND d.date = v.date
+WHERE d.continent IS NOT NULL
 
 SELECT * FROM PercentPopulationVaccinated
  
