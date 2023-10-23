@@ -1,6 +1,6 @@
 /*
 Covid 19 Data Exploration
-from 01-01-2020 to 30=04-2021
+from 01-01-2020 to 30-04-2021
 
 Skills used: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Views, Converting Data Types
 */
