@@ -1,3 +1,11 @@
+/*
+
+Cleaning Property Data in SQL Queries
+
+Skills used: Self Joins, CTE's, Aggregate Functions, Converting Data Types, Charindex, Substrings, Parsenames
+
+*/
+
 --Fix the date format
 
 SELECT SaleDate, CONVERT(DATE, SaleDate)
@@ -5,6 +13,8 @@ FROM PortfolioProject.dbo.NashvilleHousing;
 
 UPDATE NashvilleHousing
 SET SaleDate = CONVERT(DATE, SaleDate);
+
+--If the above UPDATE does not work
 
 ALTER TABLE NashvilleHousing
 ADD SaleDateConverted DATE;
